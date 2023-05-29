@@ -26,7 +26,7 @@ namespace PassBook
                 authorization.Password = password_textbox.Text;
                 authorization.Mail = mail_textbox.Text;
                 dataprovider.SingIn(authorization);
-                MessageBox.Show("Kayıt Başarılı.");
+                
                 Close();
             }
 

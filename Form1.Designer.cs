@@ -44,6 +44,7 @@ namespace PassBook
             this.label7 = new System.Windows.Forms.Label();
             this.note_textbox = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.open_view = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -161,11 +162,22 @@ namespace PassBook
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.savebtn_Click);
             // 
+            // open_view
+            // 
+            this.open_view.Location = new System.Drawing.Point(393, 401);
+            this.open_view.Name = "open_view";
+            this.open_view.Size = new System.Drawing.Size(75, 23);
+            this.open_view.TabIndex = 12;
+            this.open_view.Text = "Göster";
+            this.open_view.UseVisualStyleBackColor = true;
+            this.open_view.Click += new System.EventHandler(this.open_view_Click);
+            // 
             // PassBook
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(497, 450);
+            this.Controls.Add(this.open_view);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.note_textbox);
             this.Controls.Add(this.label7);
@@ -205,6 +217,7 @@ namespace PassBook
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox note_textbox;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button open_view;
     }
 }
 

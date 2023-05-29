@@ -44,7 +44,6 @@ namespace PassBook
             this.password_textbox.PasswordChar = '*';
             this.password_textbox.Size = new System.Drawing.Size(170, 20);
             this.password_textbox.TabIndex = 1;
-            this.password_textbox.Text = "Login";
             // 
             // btnLogin
             // 
@@ -93,6 +92,7 @@ namespace PassBook
             this.Controls.Add(this.password_textbox);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Password";
+            this.Text = "LOGIN";
             this.ResumeLayout(false);
             this.PerformLayout();
 

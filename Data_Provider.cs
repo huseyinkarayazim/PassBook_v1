@@ -49,11 +49,11 @@ namespace PassBook
             var collection = database.GetCollection<BsonDocument>("Data");
             var document = new BsonDocument
             {
-                    { "ApplicationName", save.app_name!= null ? save.app_name.ToString() : string.Empty },
-                    { "ApplicationLink", save.app_link != null ? save.app_link.ToString() : string.Empty },
+                    { "ApplicationName", save.app_name!= null ? save.app_name.ToString() : string.Empty },                   
                     { "Username",save.username != null ? save.username.ToString() : string.Empty },
                     { "Password", save.pass != null ? save.pass.ToString() : string.Empty },
                     { "Email",save.email != null ? save.email.ToString() : string.Empty },
+                    { "ApplicationLink", save.app_link != null ? save.app_link.ToString() : string.Empty },
                     { "Note", save.note != null ? save.note.ToString() : string.Empty }
              };
            
@@ -70,8 +70,6 @@ namespace PassBook
         }
         public void SingIn(Authorization authorization) 
         {
-           
-            
             if (authorization.Username != null && authorization.Username.ToString() != string.Empty || authorization.Password != null && authorization.Password.ToString() != string.Empty || authorization.Mail != null && authorization.Mail.ToString() != string.Empty)
             {
                 string crypted_user = HK.Security.StringCipher.Encrypt(authorization.Username);
@@ -80,15 +78,22 @@ namespace PassBook
                 var database = client.GetDatabase("PB");
                 var collection = database.GetCollection<BsonDocument>("Authentication");
                 var document = new BsonDocument
-            {
+                {
 
                     { "Username",  HK.Security.StringCipher.Encrypt(authorization.Username) },   
                     { "Password", HK.Security.StringCipher.Encrypt(authorization.Password) },
                     { "Email", authorization.Mail.ToString() }
-
-
-             };
-                collection.InsertOne(document);
+                };
+                try
+                {
+                    collection.InsertOne(document);
+                    MessageBoxHelper.ShowMessageBoxInfo("KAYIT BAŞARILI","Bilgi");
+                }
+                catch (System.Exception ex)
+                {
+                    MessageBoxHelper.ShowMessageBoxError("" + ex, "Hata");
+                }
+               
             }
             else { MessageBoxHelper.ShowMessageBoxError("Hiçbir Alan Boş Bırakılamaz!", "Hata"); }
         }

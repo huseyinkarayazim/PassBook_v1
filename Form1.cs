@@ -32,7 +32,7 @@ namespace PassBook
 
                         if (dataprovider.CheckCredentials(enteredUsername, enteredPassword) == true)
                         {
-                            // Şifre doğru, ana formu görüntüleyin
+                            
                             this.Show();
                         }
                         else
@@ -64,11 +64,11 @@ namespace PassBook
         {
             var dataprovider = new Data_Provider();
             var save = new Save();
-            if (app_name_textbox.Text == string.Empty)      { MessageBox.Show("Uygulama Adı Boş Bırakılamaz."); }
-            else if (app_link_textbox.Text == string.Empty) { MessageBox.Show("Uygulama Linki Boş Bırakılamaz."); }
-            else if (username_textbox.Text == string.Empty) { MessageBox.Show("Kullanıcı Adı Boş Bırakılamaz."); }
-            else if (password_textbox.Text == string.Empty) { MessageBox.Show("Şifre  Boş Bırakılamaz."); }
-            else if (mail_textbox.Text == string.Empty)     { MessageBox.Show("Email  Boş Bırakılamaz."); }
+            if (app_name_textbox.Text == string.Empty)      { MessageBoxHelper.ShowMessageBoxWar("Uygulama Adı Boş Bırakılamaz.","DİKKAT"); }
+            else if (app_link_textbox.Text == string.Empty) { MessageBoxHelper.ShowMessageBoxWar("Uygulama Linki Boş Bırakılamaz.", "DİKKAT"); }
+            else if (username_textbox.Text == string.Empty) { MessageBoxHelper.ShowMessageBoxWar("Kullanıcı Adı Boş Bırakılamaz.", "DİKKAT"); }
+            else if (password_textbox.Text == string.Empty) { MessageBoxHelper.ShowMessageBoxWar("Şifre  Boş Bırakılamaz.", "DİKKAT"); }
+            else if (mail_textbox.Text == string.Empty)     { MessageBoxHelper.ShowMessageBoxWar("Email  Boş Bırakılamaz.", "DİKKAT"); }
             else {
                 save.app_name = app_name_textbox.Text;
                 save.app_link = app_link_textbox.Text;
@@ -77,6 +77,7 @@ namespace PassBook
                 save.email = mail_textbox.Text;
                 save.note = note_textbox.Text;
                 dataprovider.dbFiller(save);
+                MessageBoxHelper.ShowMessageBoxInfo("Kayıt Başarılı!","Bilgi");
             }
            
             app_name_textbox.Clear();
@@ -86,7 +87,14 @@ namespace PassBook
             mail_textbox.Clear();
             note_textbox.Clear();
         }
-       
 
+        private void open_view_Click(object sender, EventArgs e)
+        {
+            using (var view = new ViewForm())
+            {
+                if (view.ShowDialog() == DialogResult.OK)
+                { }
+            }
+        }
     }
 }
