@@ -58,9 +58,9 @@ namespace PassBook
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(26, 33);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(73, 13);
+            this.label2.Size = new System.Drawing.Size(94, 13);
             this.label2.TabIndex = 1;
-            this.label2.Text = "UYGULAMA :";
+            this.label2.Text = "UYGULAMA ADI :";
             // 
             // label3
             // 
