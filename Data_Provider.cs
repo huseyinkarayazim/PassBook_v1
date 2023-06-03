@@ -2,6 +2,8 @@
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Threading.Tasks;
 using static PassBook.Collections;
 
 
@@ -9,12 +11,10 @@ namespace PassBook
 {
     class Data_Provider
     {
-        
-        Authorization authorization;
-
         public void dbCheck()
         {
-            var client = new MongoClient("mongodb://localhost:27017"); // MongoDB bağlantı adresi
+            var link=ConfigurationManager.AppSettings["Link"];
+            var client = new MongoClient(link); // MongoDB bağlantı adresi
             var databaseName = "PB"; // Veritabanı adı
             var databaseNames = client.ListDatabaseNames().ToList();
             
@@ -40,11 +40,18 @@ namespace PassBook
             
             
         }
-
+        public void delete(string deleted) {
+            var link = ConfigurationManager.AppSettings["Link"];
+            var client = new MongoClient(link);
+            var database = client.GetDatabase("PB");
+            var collection = database.GetCollection<BsonDocument>("Data");
+            var filter = Builders<BsonDocument>.Filter.Eq("ApplicationName",deleted);
+            var result = collection.DeleteOne(filter);
+            MessageBoxHelper.ShowMessageBoxInfo("Kayıt Veri Tabanından Silindi.","BİLGİ");        }
         public void dbFiller(Save save)
         {
-           
-            var client = new MongoClient("mongodb://localhost:27017"); // MongoDB bağlantı adresi            
+            var link = ConfigurationManager.AppSettings["Link"];
+            var client = new MongoClient(link);
             var database = client.GetDatabase("PB");
             var collection = database.GetCollection<BsonDocument>("Data");
             var document = new BsonDocument
@@ -62,7 +69,8 @@ namespace PassBook
         }
         public List<BsonDocument> ReadData()
         {
-            var client = new MongoClient("mongodb://localhost:27017");
+            var link = ConfigurationManager.AppSettings["Link"];
+            var client = new MongoClient(link);
             var database = client.GetDatabase("PB");
             var collection = database.GetCollection<BsonDocument>("Data");
             var documents = collection.Find(new BsonDocument()).ToList();
@@ -72,22 +80,26 @@ namespace PassBook
         {
             if (authorization.Username != null && authorization.Username.ToString() != string.Empty || authorization.Password != null && authorization.Password.ToString() != string.Empty || authorization.Mail != null && authorization.Mail.ToString() != string.Empty)
             {
+                var link = ConfigurationManager.AppSettings["Link"];
                 string crypted_user = HK.Security.StringCipher.Encrypt(authorization.Username);
                 string crypted_pass = HK.Security.StringCipher.Encrypt(authorization.Username);
-                var client = new MongoClient("mongodb://localhost:27017");
+                var client = new MongoClient(link);
                 var database = client.GetDatabase("PB");
                 var collection = database.GetCollection<BsonDocument>("Authentication");
                 var document = new BsonDocument
                 {
 
-                    { "Username",  HK.Security.StringCipher.Encrypt(authorization.Username) },   
+                    { "Username",  HK.Security.StringCipher.Encrypt(authorization.Username) },
                     { "Password", HK.Security.StringCipher.Encrypt(authorization.Password) },
-                    { "Email", authorization.Mail.ToString() }
+                    { "Email", authorization.Mail.ToString() },
+                    { "Status",authorization.Status },
+                    { "TempKEY",authorization.TempKEY  }
+
                 };
                 try
                 {
                     collection.InsertOne(document);
-                    MessageBoxHelper.ShowMessageBoxInfo("KAYIT BAŞARILI","Bilgi");
+                  
                 }
                 catch (System.Exception ex)
                 {
@@ -99,19 +111,19 @@ namespace PassBook
         }
         public void Login(Authorization Authorization)
         {
-            
-            var client = new MongoClient("mongodb://localhost:27017");
+            var link = ConfigurationManager.AppSettings["Link"];
+            var client = new MongoClient(link);
             var database = client.GetDatabase("PB");
             var collection = database.GetCollection<BsonDocument>("Authentication");
             var documents = collection.Find(new BsonDocument()).ToList();  
         }
-
         public bool HasAcount
         {
            
             get
             {
-                var client = new MongoClient("mongodb://localhost:27017"); // MongoDB bağlantı adresi
+                var link = ConfigurationManager.AppSettings["Link"];
+                var client = new MongoClient(link); // MongoDB bağlantı adresi
                 var database = client.GetDatabase("PB");
                 var collection = database.GetCollection<BsonDocument>("Authentication");
                 var documents = collection.Find(new BsonDocument()).ToList();
@@ -120,8 +132,9 @@ namespace PassBook
                     {
                      var _user = doc["Username"].AsString;
                      var _pass = doc["Password"].AsString;
+                     var _status = doc["Status"];
                    
-                    if (_user != string.Empty || _user != null && _pass != string.Empty || _pass != null) { return true; }
+                    if (_status==true||_user != string.Empty || _user != null && _pass != string.Empty || _pass != null) { return true; }
                     }
                 
                  return false; 
@@ -129,9 +142,10 @@ namespace PassBook
         }
         public bool CheckCredentials(string username, string password)
         {
+            var link = ConfigurationManager.AppSettings["Link"];
             string crypted_user = HK.Security.StringCipher.Encrypt(username);
             string crypted_pass = HK.Security.StringCipher.Encrypt(password);
-            var client = new MongoClient("mongodb://localhost:27017");
+            var client = new MongoClient(link);
             var database = client.GetDatabase("PB");
             var collection = database.GetCollection<BsonDocument>("Authentication");           
             var filter = Builders<BsonDocument>.Filter.Eq("Username", crypted_user) & Builders<BsonDocument>.Filter.Eq("Password", crypted_pass);

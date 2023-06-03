@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Windows.Forms;
 using HK.Security;
 
@@ -6,15 +7,14 @@ namespace PassBook
 {
     public partial class PassBook : Form
     {
-       
-
         public PassBook()
         {
-            InitializeComponent();
-           var dataprovider = new Data_Provider();
-           dataprovider.dbCheck();
            
-
+            
+            InitializeComponent();
+            DialogResult = DialogResult.OK;
+            var dataprovider = new Data_Provider();
+            dataprovider.dbCheck();
         }
         #region Load Action
         private void PassBook_Load(object sender, EventArgs e)
@@ -29,10 +29,9 @@ namespace PassBook
                     {
                         string enteredUsername = passwordForm.entered_Username;
                         string enteredPassword = passwordForm.entered_Password;
-
+                       
                         if (dataprovider.CheckCredentials(enteredUsername, enteredPassword) == true)
-                        {
-                            
+                        {                            
                             this.Show();
                         }
                         else
@@ -90,11 +89,13 @@ namespace PassBook
 
         private void open_view_Click(object sender, EventArgs e)
         {
+            
             using (var view = new ViewForm())
             {
                 if (view.ShowDialog() == DialogResult.OK)
-                { }
+                {  }
             }
+
         }
     }
 }

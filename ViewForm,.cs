@@ -9,6 +9,8 @@ namespace PassBook
         {
             InitializeComponent();
             Writer();
+
+           
         }
 
         public void Writer()
@@ -26,24 +28,25 @@ namespace PassBook
                 string[] data = new string[] { appName, username, password, mail, app_link, note };
                 ListViewItem item = new ListViewItem(data);
                 listView.Items.Add(item);
-
-
-
             }
         }
-        private void view_btn_Click(object sender, System.EventArgs e)
+        
+        private void delete_btn_Click(object sender, System.EventArgs e)
         {
+            var dataprovider = new Data_Provider();
+            string val;
             
             if (listView.Items.Count > 0)
             {
+                foreach (ListViewItem item in listView.SelectedItems)
+                {
+                    // ListViewItem'in değerlerine eriş
+                    val = item.SubItems[0].Text; // İlk sütun değeri
+                    dataprovider.delete(val);
+                    listView.Items.Remove(listView.SelectedItems[0]);
+                    return;
+                }
                 
-            }
-        }
-        private void delete_btn_Click(object sender, System.EventArgs e)
-        {
-            if (listView.Items.Count > 0)
-            {
-                listView.Items.Remove(listView.SelectedItems[0]);
             }
         }
     }

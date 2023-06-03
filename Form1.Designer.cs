@@ -156,7 +156,7 @@ namespace PassBook
             // 
             this.button1.Location = new System.Drawing.Point(169, 393);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(188, 38);
+            this.button1.Size = new System.Drawing.Size(123, 38);
             this.button1.TabIndex = 6;
             this.button1.Text = "KAYDET";
             this.button1.UseVisualStyleBackColor = true;
@@ -164,9 +164,9 @@ namespace PassBook
             // 
             // open_view
             // 
-            this.open_view.Location = new System.Drawing.Point(393, 401);
+            this.open_view.Location = new System.Drawing.Point(298, 401);
             this.open_view.Name = "open_view";
-            this.open_view.Size = new System.Drawing.Size(75, 23);
+            this.open_view.Size = new System.Drawing.Size(59, 23);
             this.open_view.TabIndex = 12;
             this.open_view.Text = "Göster";
             this.open_view.UseVisualStyleBackColor = true;

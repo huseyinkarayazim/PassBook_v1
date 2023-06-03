@@ -17,5 +17,10 @@ namespace PassBook
         {
             MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
+        public static void ShowMessageBoxSign(string message, string title)
+        {
+            MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
     }
+    
 }

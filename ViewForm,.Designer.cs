@@ -38,7 +38,6 @@ namespace PassBook
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.delete_btn = new System.Windows.Forms.Button();
-            this.view_btn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listView
@@ -92,7 +91,7 @@ namespace PassBook
             // 
             // delete_btn
             // 
-            this.delete_btn.Location = new System.Drawing.Point(399, 281);
+            this.delete_btn.Location = new System.Drawing.Point(283, 284);
             this.delete_btn.Name = "delete_btn";
             this.delete_btn.Size = new System.Drawing.Size(126, 23);
             this.delete_btn.TabIndex = 2;
@@ -100,22 +99,12 @@ namespace PassBook
             this.delete_btn.UseVisualStyleBackColor = true;
             this.delete_btn.Click += new System.EventHandler(this.delete_btn_Click);
             // 
-            // view_btn
-            // 
-            this.view_btn.Location = new System.Drawing.Point(160, 282);
-            this.view_btn.Name = "view_btn";
-            this.view_btn.Size = new System.Drawing.Size(126, 23);
-            this.view_btn.TabIndex = 1;
-            this.view_btn.Text = "GÖSTER";
-            this.view_btn.UseVisualStyleBackColor = true;
-            // 
             // ViewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(691, 319);
             this.Controls.Add(this.delete_btn);
-            this.Controls.Add(this.view_btn);
             this.Controls.Add(this.listView);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ViewForm";
@@ -128,7 +117,6 @@ namespace PassBook
 
         private System.Windows.Forms.ListView listView;
         private System.Windows.Forms.Button delete_btn;
-        private System.Windows.Forms.Button view_btn;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;

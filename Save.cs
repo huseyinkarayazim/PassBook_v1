@@ -14,6 +14,7 @@ namespace PassBook
         public string pass { get;set; }
         public string email { get; set; }
         public string note { get; set; }
+        
 
     }
     class Authorization
@@ -21,6 +22,8 @@ namespace PassBook
         public string Username { get; set; }
         public string Password { get; set; }
         public string Mail { get; set; }
-        
+        public bool Status { get; set; }
+        public string TempKEY { get; set; }
+
     }
 }
