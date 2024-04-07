@@ -47,10 +47,6 @@
     <Reference Include="DnsClient, Version=1.6.1.0, Culture=neutral, PublicKeyToken=4574bb5573c51424, processorArchitecture=MSIL">
       <HintPath>packages\DnsClient.1.6.1\lib\net471\DnsClient.dll</HintPath>
     </Reference>
-    <Reference Include="HK.Security, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\HK.Security.dll</HintPath>
-    </Reference>
     <Reference Include="MailSender">
       <HintPath>..\..\..\Desktop\my_apps\MailSender\bin\Debug\MailSender.dll</HintPath>
     </Reference>
@@ -181,6 +177,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security.cs" />
     <Compile Include="SignIn.cs">
       <SubType>Form</SubType>
     </Compile>

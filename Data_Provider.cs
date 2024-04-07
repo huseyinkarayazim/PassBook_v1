@@ -11,48 +11,64 @@ namespace PassBook
 {
     class Data_Provider
     {
+        public static IMongoDatabase  dbConnection()
+        {
+            var link = ConfigurationManager.AppSettings["Link"];
+            var client = new MongoClient(link); // MongoDB bağlantı adresi
+            var databaseName = client.GetDatabase("PB");
+            if (databaseName != null)
+            {
+                return databaseName;
+            }
+            else { return null; }
+
+        }
         public void dbCheck()
         {
-            var link=ConfigurationManager.AppSettings["Link"];
-            var client = new MongoClient(link); // MongoDB bağlantı adresi
-            var databaseName = "PB"; // Veritabanı adı
-            var databaseNames = client.ListDatabaseNames().ToList();
+            // var link=ConfigurationManager.AppSettings["Link"];
+            // var client = new MongoClient(link); // MongoDB bağlantı adresi
+            // var databaseName = "PB";
+            // var databaseNames = client.ListDatabaseNames().ToList();
+            //
+            // var test = dbConnection();
+            // 
+            // foreach (var a in databaseNames)
+            // {
+            //     if (!a.Contains(databaseName))
+            //     {
+            //         client.GetDatabase(databaseName);
+            //     }
+            // }
             
-
-            foreach (var a in databaseNames)
-            {
-                if (!a.Contains(databaseName))
-                {
-                    client.GetDatabase(databaseName);
-                }
-            }
             foreach (CollectionNames collectionName in System.Enum.GetValues(typeof(CollectionNames)))
             {
-                var db = client.GetDatabase(databaseName); // Veritabanı adı
+                var database = dbConnection();
                 var collectionNameString = collectionName.ToString();
-                var collectionExists = db.ListCollectionNames().ToList().Contains(collectionNameString);
+                var collectionExists = database.ListCollectionNames().ToList().Contains(collectionNameString);
             
                 if (!collectionExists)
                 {
-                    db.CreateCollection(collectionNameString);
+                    database.CreateCollection(collectionNameString);
                 }
             }
             
             
         }
         public void delete(string deleted) {
-            var link = ConfigurationManager.AppSettings["Link"];
-            var client = new MongoClient(link);
-            var database = client.GetDatabase("PB");
+           // var link = ConfigurationManager.AppSettings["Link"];
+           // var client = new MongoClient(link);
+           // var database = client.GetDatabase("PB");
+            var database = dbConnection();
             var collection = database.GetCollection<BsonDocument>("Data");
             var filter = Builders<BsonDocument>.Filter.Eq("ApplicationName",deleted);
             var result = collection.DeleteOne(filter);
             MessageBoxHelper.ShowMessageBoxInfo("Kayıt Veri Tabanından Silindi.","BİLGİ");        }
         public void dbFiller(Save save)
         {
-            var link = ConfigurationManager.AppSettings["Link"];
-            var client = new MongoClient(link);
-            var database = client.GetDatabase("PB");
+            // var link = ConfigurationManager.AppSettings["Link"];
+            // var client = new MongoClient(link);
+            // var database = client.GetDatabase("PB");
+            var database = dbConnection();
             var collection = database.GetCollection<BsonDocument>("Data");
             var document = new BsonDocument
             {
@@ -69,9 +85,10 @@ namespace PassBook
         }
         public List<BsonDocument> ReadData()
         {
-            var link = ConfigurationManager.AppSettings["Link"];
-            var client = new MongoClient(link);
-            var database = client.GetDatabase("PB");
+            // var link = ConfigurationManager.AppSettings["Link"];
+            // var client = new MongoClient(link);
+            // var database = client.GetDatabase("PB");
+            var database = dbConnection();
             var collection = database.GetCollection<BsonDocument>("Data");
             var documents = collection.Find(new BsonDocument()).ToList();
             return documents;
@@ -80,17 +97,16 @@ namespace PassBook
         {
             if (authorization.Username != null && authorization.Username.ToString() != string.Empty || authorization.Password != null && authorization.Password.ToString() != string.Empty || authorization.Mail != null && authorization.Mail.ToString() != string.Empty)
             {
-                var link = ConfigurationManager.AppSettings["Link"];
-                string crypted_user = HK.Security.StringCipher.Encrypt(authorization.Username);
-                string crypted_pass = HK.Security.StringCipher.Encrypt(authorization.Username);
-                var client = new MongoClient(link);
-                var database = client.GetDatabase("PB");
+                // var link = ConfigurationManager.AppSettings["Link"];  
+                // var client = new MongoClient(link);
+                // var database = client.GetDatabase("PB");
+                var database = dbConnection();
                 var collection = database.GetCollection<BsonDocument>("Authentication");
                 var document = new BsonDocument
                 {
 
-                    { "Username",  HK.Security.StringCipher.Encrypt(authorization.Username) },
-                    { "Password", HK.Security.StringCipher.Encrypt(authorization.Password) },
+                    { "Username",  Security.Encrypt(authorization.Username) },
+                    { "Password", Security.Encrypt(authorization.Password) },
                     { "Email", authorization.Mail.ToString() },
                     { "Status",authorization.Status },
                     { "TempKEY",authorization.TempKEY  }
@@ -111,9 +127,10 @@ namespace PassBook
         }
         public void Login(Authorization Authorization)
         {
-            var link = ConfigurationManager.AppSettings["Link"];
-            var client = new MongoClient(link);
-            var database = client.GetDatabase("PB");
+            // var link = ConfigurationManager.AppSettings["Link"];
+            // var client = new MongoClient(link);
+            // var database = client.GetDatabase("PB");
+            var database = dbConnection();
             var collection = database.GetCollection<BsonDocument>("Authentication");
             var documents = collection.Find(new BsonDocument()).ToList();  
         }
@@ -122,9 +139,10 @@ namespace PassBook
            
             get
             {
-                var link = ConfigurationManager.AppSettings["Link"];
-                var client = new MongoClient(link); // MongoDB bağlantı adresi
-                var database = client.GetDatabase("PB");
+                //var link = ConfigurationManager.AppSettings["Link"];
+                //var client = new MongoClient(link); // MongoDB bağlantı adresi
+                //var database = client.GetDatabase("PB");
+                var database = dbConnection();
                 var collection = database.GetCollection<BsonDocument>("Authentication");
                 var documents = collection.Find(new BsonDocument()).ToList();
                 
@@ -142,13 +160,12 @@ namespace PassBook
         }
         public bool CheckCredentials(string username, string password)
         {
-            var link = ConfigurationManager.AppSettings["Link"];
-            string crypted_user = HK.Security.StringCipher.Encrypt(username);
-            string crypted_pass = HK.Security.StringCipher.Encrypt(password);
-            var client = new MongoClient(link);
-            var database = client.GetDatabase("PB");
+            //var link = ConfigurationManager.AppSettings["Link"];           
+            //var client = new MongoClient(link);
+            //var database = client.GetDatabase("PB");
+            var database = dbConnection();
             var collection = database.GetCollection<BsonDocument>("Authentication");           
-            var filter = Builders<BsonDocument>.Filter.Eq("Username", crypted_user) & Builders<BsonDocument>.Filter.Eq("Password", crypted_pass);
+            var filter = Builders<BsonDocument>.Filter.Eq("Username", Security.Encrypt(username)) & Builders<BsonDocument>.Filter.Eq("Password", Security.Encrypt(password));
             var count = collection.CountDocuments(filter);
             return count > 0;
         }

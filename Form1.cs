@@ -36,14 +36,12 @@ namespace PassBook
                         }
                         else
                         {
-                            // Şifre yanlış, uygulamayı kapatın veya hata mesajı gösterin
-                            MessageBox.Show("Girdiğiniz Bilgiler Yanlış ! Uygulama kapatılıyor.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Acount Information Incorrect! Application Closing .", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             Application.Exit();
                         }
                     }
                     else
                     {
-                        // Şifre girişi iptal edildi, uygulamayı kapatın
                         Application.Exit();
                     }
                 }
