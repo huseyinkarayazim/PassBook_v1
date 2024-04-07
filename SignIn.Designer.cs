@@ -96,7 +96,7 @@ namespace PassBook
             // 
             // signin_btn
             // 
-            this.signin_btn.Location = new System.Drawing.Point(209, 264);
+            this.signin_btn.Location = new System.Drawing.Point(208, 435);
             this.signin_btn.Name = "signin_btn";
             this.signin_btn.Size = new System.Drawing.Size(153, 44);
             this.signin_btn.TabIndex = 8;
@@ -108,7 +108,7 @@ namespace PassBook
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(550, 356);
+            this.ClientSize = new System.Drawing.Size(550, 535);
             this.Controls.Add(this.signin_btn);
             this.Controls.Add(this.mail_textbox);
             this.Controls.Add(this.label3);

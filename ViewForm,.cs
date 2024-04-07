@@ -21,8 +21,8 @@ namespace PassBook
             foreach (var doc in documents) {
                 string appName = doc["ApplicationName"].AsString;
                 string app_link = doc["ApplicationLink"].AsString;
-                string username = HK.Security.StringCipher.Decrypt(doc["Username"].AsString);
-                string password = HK.Security.StringCipher.Decrypt(doc["Password"].AsString);
+                string username = Security.Decrypt(doc["Username"].AsString);
+                string password = Security.Decrypt(doc["Password"].AsString);
                 string mail = doc["Email"].AsString;
                 string note = doc["Note"].AsString;                
                 string[] data = new string[] { appName, username, password, mail, app_link, note };

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Configuration;
 using System.Windows.Forms;
-using HK.Security;
 
 namespace PassBook
 {
@@ -9,8 +8,6 @@ namespace PassBook
     {
         public PassBook()
         {
-           
-            
             InitializeComponent();
             DialogResult = DialogResult.OK;
             var dataprovider = new Data_Provider();
@@ -69,8 +66,8 @@ namespace PassBook
             else {
                 save.app_name = app_name_textbox.Text;
                 save.app_link = app_link_textbox.Text;
-                save.username =HK.Security.StringCipher.Encrypt(username_textbox.Text);
-                save.pass = HK.Security.StringCipher.Encrypt(password_textbox.Text);
+                save.username =Security.Encrypt(username_textbox.Text);
+                save.pass = Security.Encrypt(password_textbox.Text);
                 save.email = mail_textbox.Text;
                 save.note = note_textbox.Text;
                 dataprovider.dbFiller(save);
